@@ -9,9 +9,6 @@ const sellerRoutes = require("./routes/seller")
 const bodyParser = require('body-parser')
 const {db, intializeDb} = require("../db")
 const fs = require("fs")
-const cert = fs.readFileSync("./selfsigned.crt")
-const key = fs.readFileSync("./selfsigned.key")
-const https = require("https")
 
 app.use(cors({
     origin: "*",
