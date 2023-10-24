@@ -1,0 +1,43 @@
+const { Sequelize,  } = require("sequelize")
+const fs = require("fs")
+const sqlite = require("sqlite3");
+const path = require("path");
+const { uid } = require("uid");
+
+
+const db = new Sequelize({
+  dialect: 'sqlite',
+  dialectModule: sqlite,
+  dialectOptions: {
+    connectString: process.env.TURSO_URL,
+    authentication: {
+      token: process.env.TURSO_TOKEN
+    }
+  }
+});
+
+
+function intializeDb(db, isForced) {
+  return new Promise(async (resolve, reject) => {
+      try {
+          let syncedDb = await db.sync({force: isForced, logging: false})
+          const { Seller } = syncedDb.models
+         let testSeller =  await Seller.create({
+            SellerId: "S"+uid(5),
+            Name: "Sam",
+            District: "Malappuram",
+            Address: "XYZ",
+            DeliverablePinCodes: ["676123", "123456"],
+            MobileNumber: "1234567890",
+            Password: "homeshop"
+        }, {
+            // logging: false
+          })
+          resolve({msg: "All models synced"})
+      } catch (err) {
+          reject(err)
+      }
+  })
+}
+
+module.exports = {db, intializeDb};
