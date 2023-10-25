@@ -9,6 +9,10 @@ exports.addProduct = async (req, res) => {
         let newProduct = await db.model("Product").create({
             ProductId: "P" + uid(5),
             ...req.body,
+        }, {
+            include: {
+                model: "ProductImage"
+            }
         })
         res.status(200).json({msg: "Succesfully added product", newProduct})
     } catch (err) {
@@ -24,7 +28,7 @@ exports.listProductsSeller = async (req, res) => {
         let products = await db.model("Product").findAll({
             where: {
                 SellerId: req.params.sellerId
-            }
+            },
         })
         res.status(200).json(products)
     } catch (err) {
