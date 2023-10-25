@@ -70,6 +70,8 @@ Product.beforeCreate(async (product, _opts) => {
         throw new Error("Invalid Image Id, Image not found in database")
 })
 
+Product.Seller = Product.hasOne(db.model("Seller"))
+Product.ProductImage = Product.hasOne(db.model("ProductImage"))
 
 
 module.exports = Product
