@@ -79,7 +79,7 @@ exports.listProductsBuyer = async (req, res) => {
 }
 
 // @method POST
-// @route /image-upload
+// @route /upload-image
 exports.uploadProductImage = async (req, res) => {
     console.log("inside uploadProductImage")
     console.log(req)
@@ -102,6 +102,23 @@ exports.uploadProductImage = async (req, res) => {
     }    
 }
 
-
+// @route GET
+// /view-image/:imageId
+exports.viewProductImage = async (req, res) => {
+    try {
+        let productImage = await db.model("ProductImage").findOne({
+            where: {
+                ImageId: req.params.imageId
+            }
+        })
+        if (!productImage)
+            return res.status(404).json({msg: "Image with given id not found"})
+        res.set("Content-Type", productImage.MimeType)
+        res.send(productImage.ImageData)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+}
 
 
