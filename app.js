@@ -3,11 +3,11 @@ const cors = require('cors')
 require('dotenv').config()
 const app = express()
 // const mailRoutes = require('./routes/mail') 
-// const analyticsRoutes = require("./routes/analytics")
-// const clientRoutes = require("./routes/client")
-const sellerRoutes = require("./routes/seller")
+// const analyticsRoutes = require("./api/routes/analytics")
+// const clientRoutes = require("./api/routes/client")
+const sellerRoutes = require("./api/routes/seller")
 const bodyParser = require('body-parser')
-const {db, intializeDb} = require("../db")
+const {db, intializeDb} = require("./db")
 const fs = require("fs")
 
 app.use(cors({
@@ -32,7 +32,7 @@ app.get("/version", (req, res) => {
 })
 
 for (model of ["Seller.js", "Buyer.js", "Product.js", "Order.js", "ProductImage.js"])
-  require(`../db/models/${model}`)
+  require(`./db/models/${model}`)
 
 // sync all models and insert sample data
 intializeDb(db, true)
