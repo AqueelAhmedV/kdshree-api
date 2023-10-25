@@ -11,6 +11,7 @@ exports.addProduct = async (req, res) => {
             ...req.body,
         }, {
             include: {
+                foreignKey: "ImageId",
                 model: "ProductImage"
             }
         })
