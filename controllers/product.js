@@ -82,6 +82,7 @@ exports.listProductsBuyer = async (req, res) => {
 // @route /image-upload
 exports.uploadProductImage = async (req, res) => {
     console.log("inside uploadProductImage")
+    console.log(req)
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
@@ -90,7 +91,7 @@ exports.uploadProductImage = async (req, res) => {
         // Create a new image record in the database
         const uploadedImage = await db.model("ProductImage").create({
             ImageId: "I" + uid(5), // You can customize this as needed
-            Data: req.file.buffer,
+            ImageData: req.file.buffer,
         });
 
         return res.status(201).json({msg: "Upload Successful", ImageId: uploadedImage.ImageId});
@@ -99,5 +100,7 @@ exports.uploadProductImage = async (req, res) => {
         return res.status(500).json({ message: 'Error uploading image' });
     }    
 }
- 
+
+
+
 

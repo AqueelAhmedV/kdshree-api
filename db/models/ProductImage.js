@@ -10,8 +10,15 @@ const ProductImage = db.define("ProductImage", {
         }
     },
     ImageData: {
-        type: DataTypes.BLOB
-    }
+        type: DataTypes.BLOB,
+        allowNull: false
+    },
+    MimeType: {
+        type: DataTypes.STRING,
+        validate: {
+            notEmpty: true
+        }
+    } 
 })
 
 
