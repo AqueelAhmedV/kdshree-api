@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
 const {db} = require('../db');
 const { uid } = require('uid');
-const bcrypt = require("bcrypt-nodejs")
+const bcrypt = require("bcryptjs")
 
 // @method GET
 // @route /list/:userId

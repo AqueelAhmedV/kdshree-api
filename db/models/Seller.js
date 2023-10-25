@@ -1,6 +1,6 @@
 const {db} = require("../")
 const { DataTypes } = require("sequelize")
-const bcrypt = require("bcrypt-nodejs")
+const bcrypt = require("bcryptjs")
 const validator = require("validator")
 
 
