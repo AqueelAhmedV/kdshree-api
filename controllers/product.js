@@ -5,6 +5,7 @@ const { uid } = require('uid');
 
 
 exports.addProduct = async (req, res) => {
+    console.log(req.body)
     try {
         let newProduct = await db.model("Product").create({
             ProductId: "P" + uid(5),
