@@ -92,6 +92,7 @@ exports.uploadProductImage = async (req, res) => {
         const uploadedImage = await db.model("ProductImage").create({
             ImageId: "I" + uid(5), // You can customize this as needed
             ImageData: req.file.buffer,
+            MimeType: req.file.mimetype
         });
 
         return res.status(201).json({msg: "Upload Successful", ImageId: uploadedImage.ImageId});
