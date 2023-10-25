@@ -49,8 +49,8 @@ const Product = db.define("Product", {
         type: DataTypes.DOUBLE
     },
     Availability: {
-        type: DataTypes.ENUM("Not Available", "Available"),
-        defaultValue: "Available"
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     },
     ImageId: {
         type: DataTypes.STRING,
