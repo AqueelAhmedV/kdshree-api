@@ -29,7 +29,7 @@ const Product = db.define("Product", {
     Description: {
         type: DataTypes.STRING,
     },
-    UnitName: {
+    ProductionUnit: {
         type: DataTypes.STRING,
         validate: {
             notEmpty: true

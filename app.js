@@ -4,7 +4,7 @@ require('dotenv').config()
 const app = express()
 // const mailRoutes = require('./routes/mail') 
 // const analyticsRoutes = require("./api/routes/analytics")
-// const clientRoutes = require("./api/routes/client")
+const productRoutes = require("./api/routes/product")
 const sellerRoutes = require("./api/routes/seller")
 const bodyParser = require('body-parser')
 const {db, intializeDb} = require("./db")
@@ -26,6 +26,7 @@ app.use((req, res, next) => {
 
 
 app.use('/api/seller', (_,_res,next) => {console.log("here"); next()}, sellerRoutes)
+app.use("/api/product", productRoutes)
 
 app.get("/version", (req, res) => {
     res.send({version: "1.0.0"})

@@ -10,8 +10,9 @@ exports.addProduct = async (req, res) => {
             ProductId: "P" + uid(5),
             ...req.body,
         })
-        res.status(200).json({msg: "Succesfully placed order", newProduct})
+        res.status(200).json({msg: "Succesfully added product", newProduct})
     } catch (err) {
+        console.log(err)
         res.status(500).json(err)
     }
 }
@@ -79,6 +80,7 @@ exports.listProductsBuyer = async (req, res) => {
 // @method POST
 // @route /image-upload
 exports.uploadProductImage = async (req, res) => {
+    console.log("inside uploadProductImage")
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
