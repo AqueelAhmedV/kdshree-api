@@ -16,7 +16,7 @@ const Order = db.define("Order", {
             notEmpty: true
         },
         references: {
-            model: "Buyer",
+            model: "Buyers",
             key: "BuyerId"
         }
     },
@@ -26,7 +26,7 @@ const Order = db.define("Order", {
             notEmpty: true
         },
         references: {
-            model: "Product",
+            model: "Products",
             key: "ProductId"
         }
     },
