@@ -57,11 +57,17 @@ const Product = db.define("Product", {
         validate: {
             notEmpty: true
         },
-        references: {
-            model: "ProductImage",
-            key: "ImageId"
-        }
     }
+})
+
+Product.beforeCreate(async (product, _opts) => {
+    let uploadedImage = await db.model("ProductImage").findOne({
+        where: {
+            ImageId: product.ImageId
+        }
+    })
+    if (!uploadedImage)
+        throw new Error("Invalid Image Id, Image not found in database")
 })
 
 
