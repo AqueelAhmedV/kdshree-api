@@ -10,11 +10,6 @@ exports.addProduct = async (req, res) => {
         let newProduct = await db.model("Product").create({
             ProductId: "P" + uid(5),
             ...req.body,
-        }, {
-            include: {
-                foreignKey: "ImageId",
-                model: "ProductImage"
-            }
         })
         res.status(200).json({msg: "Succesfully added product", newProduct})
     } catch (err) {
