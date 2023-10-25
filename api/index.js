@@ -27,6 +27,10 @@ app.use((req, res, next) => {
 
 app.use('/api/seller', (_,_res,next) => {console.log("here"); next()}, sellerRoutes)
 
+app.get("/version", (req, res) => {
+    res.send({version: "1.0.0"})
+})
+
 for (model of ["Seller.js", "Buyer.js", "Product.js", "Order.js", "ProductImage.js"])
   require(`../db/models/${model}`)
 
