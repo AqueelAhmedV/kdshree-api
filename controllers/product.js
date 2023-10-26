@@ -29,6 +29,37 @@ exports.addProduct = async (req, res) => {
     }
 }
 
+
+// @method POST
+// @route /edit
+exports.editProduct = async (req, res) => {
+    let newProduct = JSON.parse(req.body.newProduct)
+    if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+    } 
+    let updatedImage = await db.model("ProductImage").update({
+        ImageData: req.file.buffer,
+        MimeType: req.file.mimetype
+    }, {
+        where: {
+            ImageId: newProduct.ImageId
+        }
+    }) 
+    
+    try {
+        let editedProduct = await db.model("Product").update({
+            ...newProduct
+        }, {
+            where: {
+                ProductId: req.body.ProductId
+            }
+        })
+        res.status(200).json({msg: "Product updated", editedProduct})
+    } catch (err) {
+        res.status(500).json({msg: "Error: Update product", err})
+    }
+}
+
 // @method GET
 // @route /list-seller/:sellerId
 exports.listProductsSeller = async (req, res) => {
@@ -44,22 +75,6 @@ exports.listProductsSeller = async (req, res) => {
     }
 }
 
-// @method POST
-// @route /edit
-exports.editProduct = async (req, res) => {
-    try {
-        let editedProduct = await db.model("Product").update({
-            ...req.body
-        }, {
-            where: {
-                ProductId: req.body.ProductId
-            }
-        })
-        res.status(200).json({msg: "Product updated", editedProduct})
-    } catch (err) {
-        res.status(500).json({msg: "Error: Update product", err})
-    }
-}
 
 
 // @method: POST
@@ -91,29 +106,29 @@ exports.listProductsBuyer = async (req, res) => {
     }
 }
 
-// @method POST
-// @route /upload-image
-exports.uploadProductImage = async (req, res) => {
-    console.log("inside uploadProductImage")
-    console.log(req)
-    try {
-        if (!req.file) {
-            return res.status(400).json({ message: 'No file uploaded' });
-        }
+// // @method POST
+// // @route /upload-image
+// exports.uploadProductImage = async (req, res) => {
+//     console.log("inside uploadProductImage")
+//     console.log(req)
+//     try {
+//         if (!req.file) {
+//             return res.status(400).json({ message: 'No file uploaded' });
+//         }
 
-        // Create a new image record in the database
-        const uploadedImage = await db.model("ProductImage").create({
-            ImageId: "I" + uid(5), // You can customize this as needed
-            ImageData: req.file.buffer,
-            MimeType: req.file.mimetype
-        });
+//         // Create a new image record in the database
+//         const uploadedImage = await db.model("ProductImage").create({
+//             ImageId: "I" + uid(5), // You can customize this as needed
+//             ImageData: req.file.buffer,
+//             MimeType: req.file.mimetype
+//         });
 
-        return res.status(201).json({msg: "Upload Successful", ImageId: uploadedImage.ImageId});
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Error uploading image' });
-    }    
-}
+//         return res.status(201).json({msg: "Upload Successful", ImageId: uploadedImage.ImageId});
+//     } catch (err) {
+//         console.error(err);
+//         return res.status(500).json({ message: 'Error uploading image' });
+//     }    
+// }
 
 // @route GET
 // /view-image/:imageId
@@ -133,28 +148,28 @@ exports.viewProductImage = async (req, res) => {
         res.status(500).json(err)
     }
 }
-// @method POST
-// @route /update-image
-exports.updateProductImage = async (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({ message: 'No file uploaded' });
-        }
-        let updatedImage = await db.model("ProductImage").update({
-            ImageData: req.file.buffer,
-            MimeType: req.file.mimetype
-        },{
-            where: {
-                ImageId: req.body.imageId
-            }
-        })
-        if (!!!updatedImage) {
-            res.status(404).json({msg: "No such image"})
-        }
-        res.status(201).json({msg: "image updated"})
-    } catch (err) {
-        console.log(err)
-        res.status(500).json(err)
-    }
-}
+// // @method POST
+// // @route /update-image
+// exports.updateProductImage = async (req, res) => {
+//     try {
+//         if (!req.file) {
+//             return res.status(400).json({ message: 'No file uploaded' });
+//         }
+//         let updatedImage = await db.model("ProductImage").update({
+//             ImageData: req.file.buffer,
+//             MimeType: req.file.mimetype
+//         },{
+//             where: {
+//                 ImageId: req.body.imageId
+//             }
+//         })
+//         if (!!!updatedImage) {
+//             res.status(404).json({msg: "No such image"})
+//         }
+//         res.status(201).json({msg: "image updated"})
+//     } catch (err) {
+//         console.log(err)
+//         res.status(500).json(err)
+//     }
+// }
 
