@@ -34,19 +34,19 @@ exports.addProduct = async (req, res) => {
 // @route /edit
 exports.editProduct = async (req, res) => {
     let newProduct = JSON.parse(req.body.newProduct)
-    if (!req.file) {
-        return res.status(400).json({ message: 'No file uploaded' });
-    } 
-    let updatedImage = await db.model("ProductImage").update({
-        ImageData: req.file.buffer,
-        MimeType: req.file.mimetype
-    }, {
-        where: {
-            ImageId: newProduct.ImageId
-        }
-    }) 
-    
+
     try {
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        } 
+        let updatedImage = await db.model("ProductImage").update({
+            ImageData: req.file.buffer,
+            MimeType: req.file.mimetype
+        }, {
+            where: {
+                ImageId: newProduct.ImageId
+            }
+        }) 
         let editedProduct = await db.model("Product").update({
             ...newProduct
         }, {
@@ -56,6 +56,7 @@ exports.editProduct = async (req, res) => {
         })
         res.status(200).json({msg: "Product updated", editedProduct})
     } catch (err) {
+        console.log(err)
         res.status(500).json({msg: "Error: Update product", err})
     }
 }
