@@ -6,7 +6,7 @@ const { uid } = require('uid');
 
 exports.addProduct = async (req, res) => {
     console.log(req)
-    let { newProduct } = JSON.parse(JSON.stringify(req.body))
+    let { newProduct } = JSON.parse(req.body.newProduct)
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
