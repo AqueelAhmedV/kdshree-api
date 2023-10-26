@@ -7,5 +7,6 @@ router.post("/upload-image", upload.single("image"), productFns.uploadProductIma
 router.post("/add", productFns.addProduct)
 router.get("/view-image/:imageId", productFns.viewProductImage)
 router.get("/list-seller/:sellerId", productFns.listProductsSeller)
+router.post("/edit", productFns.editProduct)
 
 module.exports = router

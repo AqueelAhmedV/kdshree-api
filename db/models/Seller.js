@@ -11,7 +11,8 @@ const Seller = db.define('Seller', {
       primaryKey: true,
       validate: {
         notEmpty: true
-      }
+      },
+      allowNull: false
     },
     Name: {
       type: DataTypes.STRING,

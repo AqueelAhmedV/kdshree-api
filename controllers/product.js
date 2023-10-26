@@ -33,6 +33,8 @@ exports.listProductsSeller = async (req, res) => {
     }
 }
 
+// @method POST
+// @route /edit
 exports.editProduct = async (req, res) => {
     try {
         let editedProduct = await db.model("Product").update({

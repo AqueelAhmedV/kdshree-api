@@ -18,7 +18,8 @@ const Product = db.define("Product", {
         references: {
             model: "Sellers",
             key: "SellerId"
-        }
+        },
+        allowNull: false
     },
     ProductName: {
         type: DataTypes.STRING,
