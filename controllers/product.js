@@ -34,7 +34,7 @@ exports.addProduct = async (req, res) => {
 // @route /edit
 exports.editProduct = async (req, res) => {
     let newProduct = JSON.parse(req.body.newProduct)
-
+    // console.log(req)
     try {
         if (!req.file) 
             console.log("image not updated")
@@ -52,7 +52,7 @@ exports.editProduct = async (req, res) => {
             ...newProduct
         }, {
             where: {
-                ProductId: req.body.ProductId
+                ProductId: newProduct.ProductId
             }
         })
         res.status(200).json({msg: "Product updated", editedProduct})
