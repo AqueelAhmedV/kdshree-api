@@ -68,7 +68,12 @@ exports.deleteProduct = async (req, res) => {
     try {
         let deleted = await db.model("Product").destroy({
             where: {
-                ProductId: req.body.ProductId
+                ProductId: req.body.ProductId,
+            }
+        })
+        let deleteImage = await db.model("ProductImage").destroy({
+            where: {
+                ImageId: req.body.ImageId
             }
         })
         res.status(200).json({msg: "Product deleted"})
