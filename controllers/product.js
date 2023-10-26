@@ -123,18 +123,24 @@ exports.viewProductImage = async (req, res) => {
     }
 }
 // @method POST
-// @route /delete-image
-exports.deleteProductImage = async (req, res) => {
+// @route /update-image
+exports.updateProductImage = async (req, res) => {
     try {
-        let deletedImage = await db.model("ProductImage").destroy({
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+        let updatedImage = await db.model("ProductImage").update({
+            ImageData: req.file.buffer,
+            MimeType: req.file.mimetype
+        },{
             where: {
                 ImageId: req.body.imageId
             }
         })
-        if (!!!deletedImage) {
+        if (!!!updatedImage) {
             res.status(404).json({msg: "No such image"})
         }
-        res.status(200).json({msg: "image deleted successfully"})
+        res.status(201).json({msg: "image updated"})
     } catch (err) {
         console.log(err)
         res.status(500).json(err)
