@@ -8,5 +8,6 @@ router.post("/add", productFns.addProduct)
 router.get("/view-image/:imageId", productFns.viewProductImage)
 router.get("/list-seller/:sellerId", productFns.listProductsSeller)
 router.post("/edit", productFns.editProduct)
+router.post("/delete-image", productFns.deleteProductImage)
 
 module.exports = router

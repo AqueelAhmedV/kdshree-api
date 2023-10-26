@@ -122,5 +122,22 @@ exports.viewProductImage = async (req, res) => {
         res.status(500).json(err)
     }
 }
-
+// @method POST
+// @route /delete-image
+exports.deleteProductImage = async (req, res) => {
+    try {
+        let deletedImage = await db.model("ProductImage").destroy({
+            where: {
+                ImageId: req.body.imageId
+            }
+        })
+        if (!!!deletedImage) {
+            res.status(404).json({msg: "No such image"})
+        }
+        res.status(200).json({msg: "image deleted successfully"})
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+}
 
