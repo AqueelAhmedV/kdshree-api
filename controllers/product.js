@@ -6,12 +6,23 @@ const { uid } = require('uid');
 
 exports.addProduct = async (req, res) => {
     console.log(req.body)
+    let { newProduct } = req.body
     try {
-        let newProduct = await db.model("Product").create({
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+        // Create a new image record in the database
+        const uploadedImage = await db.model("ProductImage").create({
+            ImageId: "I" + uid(5), // You can customize this as needed
+            ImageData: req.file.buffer,
+            MimeType: req.file.mimetype
+        });
+        let addedProduct = await db.model("Product").create({
             ProductId: "P" + uid(5),
-            ...req.body,
+            ...newProduct,
+            ImageId: uploadedImage.ImageId
         })
-        res.status(200).json({msg: "Succesfully added product", newProduct})
+        res.status(200).json({msg: "Succesfully added product", addedProduct})
     } catch (err) {
         console.log(err)
         res.status(500).json(err)
