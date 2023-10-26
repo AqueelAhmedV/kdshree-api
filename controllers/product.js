@@ -36,17 +36,18 @@ exports.editProduct = async (req, res) => {
     let newProduct = JSON.parse(req.body.newProduct)
 
     try {
-        if (!req.file) {
-            return res.status(400).json({ message: 'No file uploaded' });
-        } 
-        let updatedImage = await db.model("ProductImage").update({
-            ImageData: req.file.buffer,
-            MimeType: req.file.mimetype
-        }, {
-            where: {
-                ImageId: newProduct.ImageId
-            }
-        }) 
+        if (!req.file) 
+            console.log("image not updated")
+        else {
+            let updatedImage = await db.model("ProductImage").update({
+                ImageData: req.file.buffer,
+                MimeType: req.file.mimetype
+            }, {
+                where: {
+                    ImageId: newProduct.ImageId
+                }
+            })
+        }
         let editedProduct = await db.model("Product").update({
             ...newProduct
         }, {
