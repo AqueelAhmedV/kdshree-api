@@ -62,6 +62,22 @@ exports.editProduct = async (req, res) => {
     }
 }
 
+// @method POST
+// @route /delete
+exports.deleteProduct = async (req, res) => {
+    try {
+        let deleted = await db.model("Product").destroy({
+            where: {
+                ProductId: req.body.ProductId
+            }
+        })
+        res.status(200).json({msg: "Product deleted"})
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+}
+
 // @method GET
 // @route /list-seller/:sellerId
 exports.listProductsSeller = async (req, res) => {
