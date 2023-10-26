@@ -19,7 +19,6 @@ const Product = db.define("Product", {
             model: "Sellers",
             key: "SellerId"
         },
-        allowNull: false
     },
     ProductName: {
         type: DataTypes.STRING,

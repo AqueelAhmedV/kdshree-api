@@ -12,7 +12,6 @@ const Seller = db.define('Seller', {
       validate: {
         notEmpty: true
       },
-      allowNull: false
     },
     Name: {
       type: DataTypes.STRING,
