@@ -38,7 +38,7 @@ for (model of ["Product.js", "Seller.js", "ProductImage.js" , "Order.js", ])
   require(`./db/models/${model}`)
 
 // sync all models and insert sample data
-intializeDb(db, true)
+intializeDb(db, false)
 .then(({msg}) => {
     console.info(msg)
     app.listen(port, () => {
