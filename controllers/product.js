@@ -129,7 +129,7 @@ exports.listProductsBuyer = async (req, res) => {
             if (!categoryCount[p.Category]) {
                 categoryCount[p.Category] = 0;
             }
-            if (categoryCount[p.Category] <= limit) {
+            if (categoryCount[p.Category] < limit) {
                 categoryCount[p.Category]++;
                 return true; // Include the product in the filtered list
             }
