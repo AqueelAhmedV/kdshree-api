@@ -61,6 +61,7 @@ exports.getOrdersBySeller = async (req, res) => {
 // @route: /place-order
 // Buyer route
 exports.placeOrder = async (req, res) => {
+    console.log(req.body)
     try {
         let newOrder = await db.model("Order").create({
             OrderId: "O" + uid(5),
