@@ -128,7 +128,7 @@ exports.listProductsBuyer = async (req, res) => {
         let limitedProducts = products.map((p) => {
             if (!categoryCount[p.Category])
                 categoryCount[p.Category] = 0
-            if (categoryCount[p.Category] < limit) {
+            if (categoryCount[p.Category] <= limit) {
                 categoryCount[p.Category] ++
                 return p
             }
