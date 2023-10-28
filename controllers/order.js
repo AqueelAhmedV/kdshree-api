@@ -10,7 +10,7 @@ exports.getOrdersBySeller = async (req, res) => {
 
     console.log(req.body)
     try {
-        let orders = db.model("Order").findAll({
+        let orders = await db.model("Order").findAll({
             where: {
                 createdAt: {
                     [Op.between]: [from, to]
