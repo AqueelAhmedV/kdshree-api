@@ -104,6 +104,7 @@ exports.listProductsSeller = async (req, res) => {
 // @route /list-buyer
 exports.listProductsBuyer = async (req, res) => {
     let { searchStr, pinCode, limit } = req.body
+    console.log(req.body)
     try {
         let products = await db.model("Product").findAll({
             where: {
@@ -113,18 +114,20 @@ exports.listProductsBuyer = async (req, res) => {
             },
             include: [
                 {
-                    model: "Seller",
+                    model: db.model("Seller"),
                     where: {
                         DeliverablePinCodes: {
                             [Op.substring]: pinCode 
                         }
-                    }
+                    },
+                    association: db.model("Seller").Products
                 }
             ],
             limit: limit
         })
         res.status(200).json(products)
     } catch (err) {
+        console.log(err)
         res.status(500).json(err)
     }
 }

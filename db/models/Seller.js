@@ -83,9 +83,12 @@ const Seller = db.define('Seller', {
       }
     },
   }, {
-
+    
   })
 
+  Seller.Products = Seller.hasMany(db.model("Product"), {
+    foreignKey: "SellerId"
+  })
 
 
   module.exports = Seller
