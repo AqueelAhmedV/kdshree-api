@@ -17,6 +17,7 @@ function intializeDb(db, isForced) {
       try {
           let syncedDb = await db.sync({force: isForced, logging: false})
           const { Seller } = syncedDb.models
+          try {
          let testSeller =  await Seller.create({
             SellerId: "S"+uid(5),
             Name: "Sam",
@@ -27,7 +28,7 @@ function intializeDb(db, isForced) {
             Password: "homeshop"
         }, {
             // logging: false
-          })
+          })} catch (error) {console.log(error)}
           resolve({msg: "All models synced"})
       } catch (err) {
           reject(err)
