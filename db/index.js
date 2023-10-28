@@ -7,13 +7,8 @@ const { uid } = require("uid");
 
 const db = new Sequelize({
   dialect: 'sqlite',
+  storage: "./db/db.sqlite",
   dialectModule: sqlite,
-  dialectOptions: {
-    connectString: process.env.TURSO_URL,
-    authentication: {
-      token: process.env.TURSO_TOKEN
-    }
-  }
 });
 
 

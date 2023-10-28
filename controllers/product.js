@@ -112,6 +112,7 @@ exports.listProductsBuyer = async (req, res) => {
                     [Op.like]: `%${searchStr}%`
                 }
             },
+            group: "Category",
             include: [
                 {
                     model: db.model("Seller"),
