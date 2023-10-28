@@ -112,7 +112,6 @@ exports.listProductsBuyer = async (req, res) => {
                     [Op.like]: `%${searchStr}%`
                 }
             },
-            group: "Category",
             include: [
                 {
                     model: db.model("Seller"),
@@ -123,10 +122,18 @@ exports.listProductsBuyer = async (req, res) => {
                     },
                     association: db.model("Seller").Products
                 }
-            ],
-            limit: limit
+            ]
         })
-        res.status(200).json(products)
+        let categoryCount = {}
+        let limitedProducts = products.map((p) => {
+            if (!categoryCount[p.Category])
+                categoryCount[p.Category] = 0
+            if (categoryCount[p.Category] < limit) {
+                categoryCount[p.Category] ++
+                return p
+            }
+        })
+        res.status(200).json(limitedProducts)
     } catch (err) {
         console.log(err)
         res.status(500).json(err)
