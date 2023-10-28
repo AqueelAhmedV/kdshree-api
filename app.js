@@ -6,6 +6,7 @@ const app = express()
 // const analyticsRoutes = require("./api/routes/analytics")
 const productRoutes = require("./api/routes/product")
 const sellerRoutes = require("./api/routes/seller")
+const orderRoutes = require("./api/routes/order")
 const bodyParser = require('body-parser')
 const {db, intializeDb} = require("./db")
 const fs = require("fs")
@@ -25,14 +26,15 @@ app.use((req, res, next) => {
 
 
 
-app.use('/api/seller', (_,_res,next) => {console.log("here"); next()}, sellerRoutes)
+app.use('/api/seller', sellerRoutes)
 app.use("/api/product", productRoutes)
+app.use("/api/order", orderRoutes)
 
 app.get("/version", (req, res) => {
     res.send({version: "1.0.0"})
 })
 
-for (model of ["Product.js", "Seller.js", "Buyer.js", "ProductImage.js" , "Order.js", ])
+for (model of ["Product.js", "Seller.js", "ProductImage.js" , "Order.js", ])
   require(`./db/models/${model}`)
 
 // sync all models and insert sample data

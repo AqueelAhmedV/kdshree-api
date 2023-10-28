@@ -10,16 +10,6 @@ const Order = db.define("Order", {
             notEmpty: true
         }
     },
-    BuyerId: {
-        type: DataTypes.STRING,
-        validate: {
-            notEmpty: true
-        },
-        references: {
-            model: "Buyers",
-            key: "BuyerId"
-        }
-    },
     ProductId: {
         type: DataTypes.STRING,
         validate: {
@@ -33,6 +23,40 @@ const Order = db.define("Order", {
     Quantity: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    BuyerName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    BuyerAddress: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    BuyerMobileNumber: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+            notEmpty: true,
+            len: {
+            msg: "Please enter a valid mobile number",
+            args: [10, 10]
+            },
+            isNumeric: true
+        },
+        unique: true
+    },
+    BuyerPinCode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     }
 })
 

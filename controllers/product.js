@@ -110,7 +110,8 @@ exports.listProductsBuyer = async (req, res) => {
             where: {
                 ProductName: {
                     [Op.like]: `%${searchStr}%`
-                }
+                },
+                Availability: true
             },
             include: [
                 {
@@ -151,7 +152,8 @@ exports.listProductsBuyerCategory = async (req, res) => {
                 ProductName: {
                     [Op.like]: `%${searchStr}%`
                 },
-                Category: category
+                Category: category,
+                Availability: true
             },
             include: [
                 {
