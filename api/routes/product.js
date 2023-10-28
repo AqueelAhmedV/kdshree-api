@@ -9,5 +9,6 @@ router.get("/list-seller/:sellerId", productFns.listProductsSeller)
 router.post("/edit", upload.single("image"), productFns.editProduct)
 router.post("/delete", productFns.deleteProduct)
 router.post("/list-buyer", productFns.listProductsBuyer)
+router.post("/list-buyer-category", productFns.listProductsBuyerCategory)
 
 module.exports = router

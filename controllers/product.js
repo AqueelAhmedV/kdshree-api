@@ -142,6 +142,39 @@ exports.listProductsBuyer = async (req, res) => {
     }
 }
 
+exports.listProductsBuyerCategory = async (req, res) => {
+    let { searchStr, pinCode, category } = req.body
+    console.log(req.body)
+    try {
+        let products = await db.model("Product").findAll({
+            where: {
+                ProductName: {
+                    [Op.like]: `%${searchStr}%`
+                },
+                Category: category
+            },
+            include: [
+                {
+                    model: db.model("Seller"),
+                    where: {
+                        DeliverablePinCodes: {
+                            [Op.substring]: pinCode 
+                        }
+                    },
+                    association: db.model("Seller").Products
+                }
+            ]
+        })
+        
+        res.status(200).json(products)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+}
+
+
+
 // // @method POST
 // // @route /upload-image
 // exports.uploadProductImage = async (req, res) => {
