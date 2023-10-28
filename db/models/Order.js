@@ -48,8 +48,7 @@ const Order = db.define("Order", {
             args: [10, 10]
             },
             isNumeric: true
-        },
-        unique: true
+        }
     },
     BuyerPinCode: {
         type: DataTypes.STRING,
