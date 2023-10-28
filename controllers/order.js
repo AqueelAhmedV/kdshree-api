@@ -8,17 +8,8 @@ const { uid } = require("uid")
 exports.getOrdersBySeller = async (req, res) => {
     let { sellerId, from, to, pinCodes } = req.body
 
-    
+    console.log(req.body)
     try {
-        // let orders = await db.model("Order").findAll({
-        //     where: {
-        //        SellerId: sellerId,
-        //        createdAt: {
-        //         [Op.between]: [from, to]
-        //        },
-        //        PinCode: pinCode,
-        //     }
-        // })
         let orders = db.model("Order").findAll({
             where: {
                 createdAt: {
@@ -39,13 +30,12 @@ exports.getOrdersBySeller = async (req, res) => {
                 },
             ],
         })
-
-        
-        
+        console.log(orders)
         if (!orders)
             return res.status(404).json({msg: "No orders found"})
         res.status(200).json(orders)
     } catch (err) {
+        console.log(err)
         res.status(500).json(err)
     }
 }
