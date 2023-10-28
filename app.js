@@ -34,7 +34,7 @@ app.get("/version", (req, res) => {
     res.send({version: "1.0.0"})
 })
 
-for (model of ["Product.js", "Seller.js", "ProductImage.js" , "Order.js", ])
+for (model of ["Product.js","Order.js", "Seller.js", "ProductImage.js" , ])
   require(`./db/models/${model}`)
 
 // sync all models and insert sample data

@@ -59,6 +59,8 @@ const Order = db.define("Order", {
     }
 })
 
-
+db.model("Product").Orders = db.model("Product").hasMany(Order, {
+    foreignKey: "ProductId"
+})
 
 module.exports = Order

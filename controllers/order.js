@@ -23,26 +23,20 @@ exports.getOrdersBySeller = async (req, res) => {
             where: {
                 createdAt: {
                     [Op.between]: [from, to]
+                },
+                BuyerPinCode: {
+                    [Op.in]: pinCodes
                 }
             },
-            attributes: ["Quantity", "createdAt"],
             include: [
                 {
-                    model: "Product",
+                    model: db.model("Product"),
                     where: {
                         SellerId: sellerId
                     },
-                    attributes: ["ProductName", "UnitName", "Category"]
+                    attributes: ["ProductName", "ProductionUnit"],
+                    association: db.model("Product").Orders
                 },
-                {
-                    model: "Buyer",
-                    where: {
-                        PinCode: {
-                            [Op.in]: pinCodes
-                        }
-                    },
-                    attributes: ["Name", "Address", "PinCode", "MobileNumber"]
-                }
             ],
         })
 
