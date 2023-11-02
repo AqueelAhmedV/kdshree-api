@@ -6,7 +6,7 @@ const { uid } = require("uid")
 // @method: POST
 // Seller route
 exports.getOrdersBySeller = async (req, res) => {
-    let { sellerId, from, to, pinCodes } = req.body
+    let { sellerId, from, to } = req.body
 
     console.log(req.body)
     try {
@@ -14,9 +14,6 @@ exports.getOrdersBySeller = async (req, res) => {
             where: {
                 createdAt: {
                     [Op.between]: [from, to]
-                },
-                BuyerPinCode: {
-                    [Op.in]: pinCodes
                 }
             },
             include: [
