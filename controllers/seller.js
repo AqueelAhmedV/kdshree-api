@@ -9,13 +9,12 @@ const bcrypt = require("bcryptjs")
 exports.editAccount = async (req, res) => {
     console.log(req.body)
     try {
-        let editedSeller = await db.model("Seller").update(req.body, {
-            where: {
-                SellerId: req.body.SellerId
-            },
-            returning: true,
-        })
-        res.status(200).json({ msg: "Account edited", editedSeller })
+        let seller = await db.model("Seller").findByPk(req.body.SellerId)
+        for (let k of Object.keys(req.body)) {
+            seller[k] = req.body[k]
+        }
+        await seller.save()
+        res.status(200).json({ msg: "Account edited", seller })
     } catch (error) {
         console.log(error)
         res.status(500).json(error)
