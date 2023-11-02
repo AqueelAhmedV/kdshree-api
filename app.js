@@ -3,7 +3,7 @@ const cors = require('cors')
 require('dotenv').config()
 const app = express()
 // const mailRoutes = require('./routes/mail') 
-// const analyticsRoutes = require("./api/routes/analytics")
+const constantsRoutes = require("./api/routes/constants")
 const productRoutes = require("./api/routes/product")
 const sellerRoutes = require("./api/routes/seller")
 const orderRoutes = require("./api/routes/order")
@@ -29,6 +29,7 @@ app.use((req, res, next) => {
 app.use('/api/seller', sellerRoutes)
 app.use("/api/product", productRoutes)
 app.use("/api/order", orderRoutes)
+app.use("/api/constants", constantsRoutes)
 
 app.get("/version", (req, res) => {
     res.send({version: "1.0.0"})
