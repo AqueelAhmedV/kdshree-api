@@ -3,26 +3,24 @@ const {db} = require('../db');
 const { uid } = require('uid');
 const bcrypt = require("bcryptjs")
 
-// @method GET
-// @route /list/:userId
-exports.listAllUserClients = async (req, res) => {
+
+// @method POST
+// @route /account/edit
+exports.editAccount = async (req, res) => {
+    console.log(req.body)
     try {
-        console.log("here", req.params)
-        let clients = await db.model("Client").findAll({
+        let editedSeller = await db.model("Seller").update(req.body, {
             where: {
-                UserId: req.params.userId
-            }
+                SellerId: req.body.SellerId
+            },
+            returning: true,
         })
-        // console.log(clients)
-        // console.log(db.models)
-        if (!clients || clients.length === 0)
-            return res.status(404).json({msg: "No clients yet"})
-        return res.status(200).json(clients.map(c => c.dataValues))
-    } catch (err) {
-        res.status(500).json(err)
+        res.status(200).json({ msg: "Account edited", editedSeller })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
     }
 }
-
 
 // @method POST
 // @route /login
